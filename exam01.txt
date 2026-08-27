@@ -1,0 +1,67 @@
+
+Evaluar Respuestas
+¡Excelente Dominio Técnico!
+Demuestras un control sólido de automatizaciones con pandas, openpyxl y gestión de entornos modernos con uv.
+
+10 / 10
+Desglose Pedagógico y Solucionario
+Pregunta 1: ¡Correcto!
+1. Configuración de Entornos con 'uv'
+En un proyecto de automatización nuevo, ejecutas el comando `uv add pandas openpyxl` en la terminal. ¿Qué sucede internamente en el entorno de desarrollo?
+
+💡 Explicación Técnica y Contraste Excel vs Python:
+El gestor moderno **uv** gestiona el aislamiento de proyectos actualizando `pyproject.toml` y resolviendo dependencias ultrarrápidamente dentro de la carpeta `.venv` local del proyecto, garantizando reproducibilidad sin contaminar el Python global.
+Pregunta 2: ¡Correcto!
+2. DataFrames e Indexación Basada en Cero
+Tienes el siguiente diccionario de listas en Python: ¿Qué valor exacto se obtiene al ejecutar `df.iloc[1, 0]`?
+
+💡 Explicación Técnica y Contraste Excel vs Python:
+En Python y pandas la indexación es basada en cero. `.iloc[1, 0]` accede a la fila con índice `1` (segunda fila: `'Mouse'`) y la columna con índice `0` (primera columna: `'Producto'`).
+Pregunta 3: ¡Correcto!
+3. Vectorización vs Fórmulas de Excel
+Tienes un DataFrame `df` con la columna `'Subtotal'`. Deseas calcular el IVA (16%) y el `'Total'` final para miles de registros. ¿Cuál es la forma idónea y vectorizada de realizar este cálculo en pandas?
+
+💡 Explicación Técnica y Contraste Excel vs Python:
+La opción `df['Total'] = df['Subtotal'] * 1.16` ejecuta una operación **vectorizada** a nivel de lenguaje C (C-speed) sobre arreglos contiguos en memoria. Evita los bucles `for` lentos en Python y no corre los riesgos de corrupción por arrastrar fórmulas manuales en Excel.
+Pregunta 4: ¡Correcto!
+4. Indexación Booleana (Filtrado de Tablas)
+Deseas filtrar un DataFrame `df` para obtener únicamente las ventas de la región `'Norte'` cuya cantidad sea superior a 100 unidades. ¿Cuál es la sintaxis de indexación booleana correcta?
+
+💡 Explicación Técnica y Contraste Excel vs Python:
+En pandas, para combinar condiciones lógicas elemento por elemento se debe utilizar el operador bitwise `&` (o `|` para OR) y **encerrar cada condición entre paréntesis obligatorios** debido a la prioridad de operadores en Python.
+Pregunta 5: ¡Correcto!
+5. Tablas Dinámicas Programáticas
+Necesitas calcular el promedio de ventas por categoría y conservar el resultado como un DataFrame estándar plano (sin índices multinivel). ¿Qué secuencia de métodos en pandas debes ejecutar?
+
+💡 Explicación Técnica y Contraste Excel vs Python:
+El flujo estándar para equivalente a una tabla dinámica es: agrupar con `.groupby('Categoria')`, seleccionar la columna objetivo `['Ventas']`, aplicar la agregación `.mean()`, y finalmente encadenar `.reset_index()` para devolver los grupos agrupados como una columna normal del DataFrame.
+Pregunta 6: ¡Correcto!
+6. Lectura de Archivos Excel
+Estás leyendo una plantilla de Excel donde la primera fila contiene un título del reporte y los encabezados reales comienzan en la fila 2. Además, la primera columna contiene el ID de empleado que deseas usar como índice. ¿Cómo debes llamar a `pd.read_excel()`?
+
+💡 Explicación Técnica y Contraste Excel vs Python:
+El parámetro `header=1` indica que la segunda fila de Excel (índice 1 basado en cero) contiene los nombres de las columnas. `index_col=0` indica que la primera columna (índice 0) debe asignarse como el `Index` del DataFrame.
+Pregunta 7: ¡Correcto!
+7. Simulación de BUSCARV (VLOOKUP) con pd.merge()
+Tienes un DataFrame `df_ventas` (con la columna `'ID_Cliente'`) y un DataFrame `df_clientes` (con la columna `'ID_Cliente'`). Quieres simular un `BUSCARV` (VLOOKUP) estricto de Excel que traiga la información de clientes manteniendo solo las ventas de clientes válidos existentes en ambas tablas. ¿Qué código debes usar?
+
+💡 Explicación Técnica y Contraste Excel vs Python:
+`pd.merge(..., how='inner')` realiza una intersección exacta basada en la clave compartida (`'ID_Cliente'`). A diferencia del `BUSCARV` tradicional de Excel que puede romper referencias o fallar si las columnas no están a la derecha, `merge` opera de forma relacional y robusta.
+Pregunta 8: ¡Correcto!
+8. Estilizado Visual con openpyxl
+En `openpyxl`, deseas aplicar a una celda un relleno sólido de color azul corporativo (código HEX `'1F4E79'`). ¿Cuál es la forma correcta de definir e instanciar el relleno?
+
+💡 Explicación Técnica y Contraste Excel vs Python:
+En `openpyxl`, el formateo de fondos requiere importar la clase `PatternFill` de `openpyxl.styles` y asignar a la propiedad `.fill` del objeto celda un objeto configurado con `start_color`, `end_color` y `fill_type='solid'`.
+Pregunta 9: ¡Correcto!
+9. Auto-ajuste de Columnas en openpyxl
+Deseas ajustar automáticamente el ancho de todas las columnas de una hoja de trabajo `ws` con `openpyxl`. ¿Qué bloque de código realiza esta tarea correctamente sin fallar por tipos de datos no de texto (como fechas o números)?
+
+💡 Explicación Técnica y Contraste Excel vs Python:
+Usar `str(cell.value or '')` convierte de manera segura cualquier valor (`None`, `int`, `float`, `datetime`) a texto sin lanzar `TypeError` por intentar hacer `len()` sobre un número. `col[0].column_letter` obtiene la letra de la columna desde su primera celda.
+Pregunta 10: ¡Correcto!
+10. Depuración de AttributeError en openpyxl
+Al intentar iterar sobre las columnas de una hoja de Excel usando `ws.columns` en `openpyxl`, ejecutas el siguiente código y recibes un `AttributeError`: ```python for col in ws.columns: col_idx = col.column # AttributeError: 'tuple' object has no attribute 'column' ``` ¿Por qué ocurre este error y cuál es la solución adecuada?
+
+💡 Explicación Técnica y Contraste Excel vs Python:
+`ws.columns` es un generador que entrega tuplas conteniendo todas las celdas de esa columna `(Cell_1, Cell_2, ...)`. Por tanto, el objeto `col` es una `tuple` de Python y no tiene `.column`. Se accede a las propiedades de la columna a través de cualquiera de sus celdas, p. ej. `col[0].column` o `col[0].column_letter`.
